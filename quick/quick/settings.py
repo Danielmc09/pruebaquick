@@ -41,7 +41,9 @@ APP_TERCEROS = [
 ]
 
 APP_PROPIAS = [
-    'app.ventas'
+    'app.bills',
+    'app.clients',
+    'app.products'
 ]
 
 INSTALLED_APPS = APP_TERCEROS + APP_PROPIAS
@@ -130,3 +132,5 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'clients.Clients'
