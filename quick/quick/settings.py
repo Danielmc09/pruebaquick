@@ -39,6 +39,7 @@ THIRD_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
+    'import_export',
 ]
 
 LOCAL_APPS = [
@@ -50,7 +51,10 @@ LOCAL_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ]
+    ],
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework_csv.renderers.CSVRenderer',
+    ),
 }
 
 INSTALLED_APPS = THIRD_APPS + LOCAL_APPS

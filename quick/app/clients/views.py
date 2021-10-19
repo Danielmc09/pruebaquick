@@ -1,10 +1,14 @@
 import csv
-
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.settings import api_settings
+from rest_framework_csv import renderers as r
+from rest_framework.decorators import action
+from rest_framework_csv.parsers import CSVParser
+from rest_framework_csv.renderers import CSVRenderer
 
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -12,13 +16,14 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
 from django.db import connection
+from django.shortcuts import render
 
 from .serializers import (
     ClientsSerializers, UserSerializers, CustomTokenObtainPairSerializer, CustomUserSerializer
     )
 
 from .models import Clients
-from app.bills.models import Bills
+from .resource import ClientsResource
 
 class ClientsViewSet(viewsets.ModelViewSet):
     serializer_class = ClientsSerializers
@@ -119,7 +124,7 @@ class Logout(GenericAPIView):
 
 
 def export_csv(request):
-    
+
     with connection.cursor() as cursor:
         cursor.execute("select documento, (first_name ||' '|| last_name), count(client_id) from clients_clients, bills where  clients_clients.id = bills.client_id group by documento")
         rawData = cursor.fetchall()
