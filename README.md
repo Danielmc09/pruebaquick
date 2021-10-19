@@ -27,6 +27,8 @@
 |http://127.0.0.1:8000/ventas/bills/:id|PUT
 |http://127.0.0.1:8000/ventas/bills/:id|DELETE
 |http://127.0.0.1:8000/export/
+|http://127.0.0.1:8000/upload/
 
+- el archivo de prueba para el endpoint upload se encuentra en la dirección quick/app/clients/file_csv/ el nombre del archivo es clients.csv
 
 Autor: Angel Daniel Menideta Castillo © 2021
