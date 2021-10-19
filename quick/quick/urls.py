@@ -16,8 +16,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from app.clients.views import Login, Logout, export_csv
+
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    path('login/', Login.as_view(), name='login'),
+    path('logout/', Logout.as_view(), name='logout'),
+
+    path('export/', export_csv),
+
     path('ventas/', include('app.bills.routers')),
     path('clientes/', include('app.clients.routers')),
     path('productos/', include('app.products.routers')),
