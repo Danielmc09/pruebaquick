@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from app.clients.views import Login, Logout, export_csv
+from app.clients.views import Login, Logout, export_csv, UploadFileView
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -33,8 +33,10 @@ urlpatterns = [
     path('logout/', Logout.as_view(), name='logout'),
 
     path('export/', export_csv),
+    path('upload/', UploadFileView.as_view(), name='upload-file'),
 
     path('ventas/', include('app.bills.routers')),
     path('clientes/', include('app.clients.routers')),
     path('productos/', include('app.products.routers')),
 ]
+

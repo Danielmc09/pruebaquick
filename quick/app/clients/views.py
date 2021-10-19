@@ -1,4 +1,5 @@
 import csv
+import io, csv, pandas as pd
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -9,6 +10,7 @@ from rest_framework_csv import renderers as r
 from rest_framework.decorators import action
 from rest_framework_csv.parsers import CSVParser
 from rest_framework_csv.renderers import CSVRenderer
+from rest_framework import generics
 
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -19,11 +21,10 @@ from django.db import connection
 from django.shortcuts import render
 
 from .serializers import (
-    ClientsSerializers, UserSerializers, CustomTokenObtainPairSerializer, CustomUserSerializer
+    ClientsSerializers, UserSerializers, CustomTokenObtainPairSerializer, CustomUserSerializer, FileUploadSerializer
     )
 
 from .models import Clients
-from .resource import ClientsResource
 
 class ClientsViewSet(viewsets.ModelViewSet):
     serializer_class = ClientsSerializers
@@ -140,3 +141,24 @@ def export_csv(request):
     writer.writerow(query_set)
 
     return response
+
+class UploadFileView(generics.CreateAPIView):
+    serializer_class = FileUploadSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        file = serializer.validated_data['file']
+        reader = pd.read_csv(file)
+        for _, row in reader.iterrows():
+            new_file = Clients(
+                            password= row.password,
+                            email= row.email,
+                            first_name= row.first_name,
+                            last_name= row.last_name,
+                            documento= row.documento
+                            )
+            var = new_file.password
+            new_file.set_password(var)
+            new_file.save()
+        return Response({'message':'Clientes insertados correctamente!'}, status=status.HTTP_200_OK)
