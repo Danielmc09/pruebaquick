@@ -5,6 +5,7 @@
 - activar entorno virtual 
 - instalar librerias  ->  (env) pip install -r requirements.txt 
 - ejecutar el proyecto 
+- Crear migraciones manage.py makemigrations - manage.py migrate
 - crear un usuario en el endpoint -> http://127.0.0.1:8000/clientes/user/
 
 - Puertos a utilizar que no deben estar ocupados o con los servicios locales apagados:
