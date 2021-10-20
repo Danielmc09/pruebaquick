@@ -29,6 +29,11 @@
 |http://127.0.0.1:8000/export/
 |http://127.0.0.1:8000/upload/
 
+- parametros para el endpoint /clientes/user/ -> email - password
+- parametros para el endpoint /login/ -> email - password
+- parametros para el endpoint /clientes/clients/ -> password - email - first_name - last_name - documento
+- parametros para el endpoint /productos/products/ -> name - description
+- parametros para el endpoint /ventas/bills/ -> company_name - nit - code - client_id
 - el archivo de prueba para el endpoint upload se encuentra en la dirección quick/app/clients/file_csv/ el nombre del archivo es clients.csv
 
 Autor: Angel Daniel Menideta Castillo © 2021
